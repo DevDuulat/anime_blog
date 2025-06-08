@@ -135,20 +135,73 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="trending__product">
-            <div class="row">
+              <div class="row">
               <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="section-title">
-                  <h4>Trending Now</h4>
+                  <h4>Сейчас в тренде</h4>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="btn__all">
-                  <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                  <a href="#" class="primary-btn">Посмотреть все<span class="arrow_right"></span></a>
+                </div>
+              </div>
+            </div>
+         <div class="row">
+              @foreach($trendingAnime as $anime)
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                  <div class="product__item">
+                      <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
+                          <div class="ep">{{ $anime->type->value }}</div>
+                          <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                      </div>
+                      <div class="product__item__text">
+                          <ul>
+                              <li>{{ $anime->category->name }}</li>
+                          </ul>
+                          <h5><a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a></h5>
+                      </div>
+                  </div>
+              </div>
+              @endforeach
+          </div>
+            <div class="row">
+
+            </div>
+          </div>
+
+             <div class="recent__product">
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-8">
+                <div class="section-title">
+                  <h4>Последние</h4>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="btn__all">
+                <a href="#" class="primary-btn">Посмотреть все<span class="arrow_right"></span></a>
                 </div>
               </div>
             </div>
             <div class="row">
-
+              @foreach($recentAnime as $anime)
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
+                    <div class="ep">{{ $anime->type->value }}</div>
+                    <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                  </div>
+                  <div class="product__item__text">
+                    <ul>
+                      <li>{{ $anime->category->name }}</li>
+                    </ul>
+                    <h5>
+                      <a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              @endforeach
             </div>
           </div>
 
@@ -156,20 +209,36 @@
             <div class="row">
               <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="section-title">
-                  <h4>Popular Shows</h4>
+                  <h4>Популярные</h4>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="btn__all">
-                  <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                <a href="#" class="primary-btn">Посмотреть все<span class="arrow_right"></span></a>
                 </div>
               </div>
             </div>
             <div class="row">
-
+              @foreach($popularAnime as $anime)
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
+                    <div class="ep">{{ $anime->type->value }}</div>
+                    <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                  </div>
+                  <div class="product__item__text">
+                    <ul>
+                      <li>{{ $anime->category->name }}</li>
+                    </ul>
+                    <h5>
+                      <a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              @endforeach
             </div>
           </div>
-
           <!-- Остальные секции (recent__product, live__product) можно аналогично переделать с использованием Blade -->
 
         </div>
@@ -177,7 +246,7 @@
           <div class="product__sidebar">
             <div class="product__sidebar__view">
               <div class="section-title">
-                <h5>Top Views</h5>
+                <h5>Наш блог</h5>
               </div>
               <ul class="filter__controls">
                 <li class="active" data-filter="*">Day</li>
@@ -186,15 +255,19 @@
                 <li data-filter=".years">Years</li>
               </ul>
               <div class="filter__gallery">
-
-              </div>
-            </div>
-
-            <div class="product__sidebar__comment">
-              <div class="section-title">
-                <h5>New Comment</h5>
-              </div>
-
+                    @foreach($blogPosts as $post)
+                    <div class="product__sidebar__view__item set-bg mix day years" 
+                        data-setbg="{{ asset('storage/' . $post->image) }}">
+                        <div class="ep">{{ $post->category->name }}</div>
+                        <div class="view">
+                            <i class="fa fa-comments"></i> {{ $post->comments->count() }}
+                        </div>
+                        <h5>
+                            <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
+                        </h5>
+                    </div>
+                    @endforeach
+                </div>
             </div>
           </div>
         </div>

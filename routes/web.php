@@ -15,7 +15,8 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/anime/{slug}', [AnimeController::class, 'show'])->name('anime.show');
+Route::get('/blog/{slug}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/dashboard', function () {
   return view('dashboard');
