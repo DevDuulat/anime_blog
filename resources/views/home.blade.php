@@ -67,18 +67,19 @@
             </div>
           </div>
           <div class="row">
-            @foreach($trendingAnime as $anime)
+            @foreach($trendingMedia as $media)
+
             <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="product__item">
-                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
-                  <div class="ep">{{ $anime->type->value }}</div>
-                  <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $media->image) }}">
+                  <div class="ep">{{ $media->type->value }}</div>
+                  <div class="view"><i class="fa fa-eye"></i> {{ $media->views }}</div>
                 </div>
                 <div class="product__item__text">
                   <ul>
-                    <li>{{ $anime->category->name }}</li>
+                    <li>{{ $media->category->name }}</li>
                   </ul>
-                  <h5><a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a></h5>
+                  <h5><a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a></h5>
                 </div>
               </div>
             </div>
@@ -103,19 +104,19 @@
             </div>
           </div>
           <div class="row">
-            @foreach($recentAnime as $anime)
+            @foreach($recentMedia as $media)
             <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="product__item">
-                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
-                  <div class="ep">{{ $anime->type->value }}</div>
-                  <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $media->image) }}">
+                  <div class="ep">{{ $media->type->value }}</div>
+                  <div class="view"><i class="fa fa-eye"></i> {{ $media->views }}</div>
                 </div>
                 <div class="product__item__text">
                   <ul>
-                    <li>{{ $anime->category->name }}</li>
+                    <li>{{ $media->category->name }}</li>
                   </ul>
                   <h5>
-                    <a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a>
+                    <a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a>
                   </h5>
                 </div>
               </div>
@@ -138,19 +139,19 @@
             </div>
           </div>
           <div class="row">
-            @foreach($popularAnime as $anime)
+            @foreach($popularMedia as $media)
             <div class="col-lg-4 col-md-6 col-sm-6">
               <div class="product__item">
-                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $anime->image) }}">
-                  <div class="ep">{{ $anime->type->value }}</div>
-                  <div class="view"><i class="fa fa-eye"></i> {{ $anime->views }}</div>
+                <div class="product__item__pic set-bg" data-setbg="{{ asset('storage/' . $media->image) }}">
+                  <div class="ep">{{ $media->type->value }}</div>
+                  <div class="view"><i class="fa fa-eye"></i> {{ $media->views }}</div>
                 </div>
                 <div class="product__item__text">
                   <ul>
-                    <li>{{ $anime->category->name }}</li>
+                    <li>{{ $media->category->name }}</li>
                   </ul>
                   <h5>
-                    <a href="{{ route('anime.show', $anime->slug) }}">{{ $anime->title }}</a>
+                    <a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a>
                   </h5>
                 </div>
               </div>

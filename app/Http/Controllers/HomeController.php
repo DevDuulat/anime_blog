@@ -2,41 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anime;
+use App\Models\MediaItem;
 use App\Models\Post;
 
 class HomeController extends Controller
 {
   public function index()
   {
-    $animeQuery = Anime::with('category');
+      $mediaQuery = MediaItem::with('category');
 
-    $trendingAnime = (clone $animeQuery)
-      ->orderBy('views', 'desc')
-      ->take(3)
-      ->get();
+      $trendingMedia = (clone $mediaQuery)
+          ->orderBy('views', 'desc')
+          ->take(3)
+          ->get();
 
-    $popularAnime = (clone $animeQuery)
-      ->orderBy('views', 'desc')
-      ->skip(3)
-      ->take(4)
-      ->get();
+      $popularMedia = (clone $mediaQuery)
+          ->orderBy('views', 'desc')
+          ->skip(3)
+          ->take(4)
+          ->get();
 
-    $recentAnime = (clone $animeQuery)
-      ->latest()
-      ->take(2)
-      ->get();
+      $recentMedia = (clone $mediaQuery)
+          ->latest()
+          ->take(2)
+          ->get();
 
-    $blogPosts = Post::with(['category', 'user'])
-      ->latest()
-      ->take(5)
-      ->get();
+      $blogPosts = Post::with(['category', 'user'])
+          ->latest()
+          ->take(5)
+          ->get();
 
-    return view('home', compact(
-      'trendingAnime',
-      'popularAnime',
-      'recentAnime',
-      'blogPosts'
-    ));
+      return view('home', compact(
+          'trendingMedia',
+          'popularMedia',
+          'recentMedia',
+          'blogPosts'
+      ));
   }
+
 }
