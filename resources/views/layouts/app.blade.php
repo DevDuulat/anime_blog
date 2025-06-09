@@ -1,36 +1,51 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+  <meta charset="UTF-8">
+  <title>@yield('title', 'Default Title')</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+  {{-- Стили --}}
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/plyr.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" />
+</head>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+<body>
+  <!-- Page Preloder -->
+  <div id="preloder">
+    <div class="loader"></div>
+  </div>
+
+  @include('partials.header')
+  {{-- Контент страницы --}}
+  @yield('content')
+
+  {{-- Футер --}}
+  @include('partials.footer')
+
+  <!-- Js Plugins -->
+  <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/player.js') }}"></script>
+  <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
+  <script src="{{ asset('js/mixitup.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
+</body>
+
 </html>

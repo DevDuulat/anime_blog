@@ -1,47 +1,89 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.app')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('title', 'Вход')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@section('content')
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="{{ asset('img/normal-breadcrumb.jpg') }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="normal__breadcrumb__text">
+          <h2>PlayMix</h2>
+          <p>Добро пожаловать на нашу платформу</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Normal Breadcrumb End -->
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+<!-- Login Section Begin -->
+<section class="login spad">
+  <div class="container">
+    <div class="row">
+      <!-- Форма входа -->
+      <div class="col-lg-6">
+        <div class="login__form">
+          <h3>Вход</h3>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+          <!-- Статус сессии -->
+          @if (session('status'))
+          <div class="alert alert-success mb-4">
+            {{ session('status') }}
+          </div>
+          @endif
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+          <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+            <!-- Email -->
+            <div class="input__item">
+              <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus />
+              <span class="icon_mail"></span>
+            </div>
+            @error('email')
+            <div class="text-danger mb-2">{{ $message }}</div>
+            @enderror
 
-        <div class="flex items-center justify-end mt-4">
+            <!-- Пароль -->
+            <div class="input__item">
+              <input type="password" name="password" placeholder="Пароль" required />
+              <span class="icon_lock"></span>
+            </div>
+            @error('password')
+            <div class="text-danger mb-2">{{ $message }}</div>
+            @enderror
+
+            <!-- Запомнить меня -->
+            <div class="mt-3 mb-3 d-flex align-items-center">
+              <input type="checkbox" id="remember_me" name="remember" class="me-2" />
+              <label for="remember_me" class="mb-0">Запомнить меня</label>
+            </div>
+
+            <button type="submit" class="site-btn">Войти</button>
+
+            <!-- Забыл пароль -->
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            <a class="forget_pass d-block mt-3" href="{{ route('password.request') }}">
+              Забыли пароль?
+            </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+          </form>
         </div>
-    </form>
-</x-guest-layout>
+      </div>
+
+      <!-- Блок регистрации -->
+      <div class="col-lg-6">
+        <div class="login__register">
+          <h3>У вас нет учетной записи?</h3>
+          <a href="{{ route('register') }}" class="primary-btn">Зарегистрируйтесь сейчас</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Login Section End -->
+
+@endsection
