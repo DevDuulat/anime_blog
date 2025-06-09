@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Quiz;
 use App\Models\User;
@@ -20,6 +19,8 @@ class QuizSeeder extends Seeder
       'title' => 'Тест на знание аниме',
       'description' => 'Проверьте свои знания в мире аниме!',
       'user_id' => $user->id,
+      'category_id' => 1,
+      'image' => 'https://placehold.co/600x400',
     ]);
   }
 }

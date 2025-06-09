@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Quiz extends Model
 {
@@ -13,6 +14,8 @@ class Quiz extends Model
     'title',
     'description',
     'user_id',
+    'image',
+    'category_id',
   ];
 
   public function user()
@@ -20,9 +23,13 @@ class Quiz extends Model
     return $this->belongsTo(User::class);
   }
 
-  // Связь с вопросами (будет)
   public function questions()
   {
     return $this->hasMany(Question::class);
   }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\QuizResource\Pages;
-use App\Filament\Resources\QuizResource\RelationManagers;
-use App\Models\Quiz;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\Quiz;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\Resource;
+use App\Filament\Resources\QuizResource\Pages;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 
 class QuizResource extends Resource
 {
@@ -23,14 +21,28 @@ class QuizResource extends Resource
     {
         return $form
             ->schema([
+                SelectTree::make('category_id')
+              ->label('Категория')
+              ->relationship(
+                relationship: 'category',
+                titleAttribute: 'name',
+                parentAttribute: 'parent_id'
+              )
+              ->placeholder('Выберите категорию')
+              ->searchable()
+              ->defaultOpenLevel(2)
+              ->enableBranchNode()
+              ->clearable()
+              ->withCount()
+              ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
+
             ]);
     }
 
@@ -40,9 +52,8 @@ class QuizResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\ImageColumn::make('image'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -3,9 +3,12 @@
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaItemController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -20,11 +23,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/anime/{slug}', [AnimeController::class, 'show'])->name('anime.show');
+
+Route::get('/media-detail/{slug}', [MediaItemController::class, 'mediaDetail'])->name('media.detail');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
-Route::post('/posts/{post:slug}/comments', [CommentController::class, 'store'])->name('comments.store');
 
+Route::post('/posts/{post:slug}/comments', [CommentController::class, 'storePostComment'])
+  ->name('posts.comments.store')
+  ->middleware('auth');
+
+Route::post('/media/{mediaItem}/comments', [CommentController::class, 'storeMediaComment'])
+  ->name('media.comments.store')
+  ->middleware('auth');
+
+Route::get('/category/{slug}', [MediaItemController::class, 'byCategory'])->name('category.show');
+Route::get('/media/{slug}', [MediaItemController::class, 'show'])->name('media.show');
+
+Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+Route::get('/quizzes/{id}', [QuizController::class, 'show'])->name('quizzes.show');
+Route::post('/quizzes/{quizId}/questions/{questionId}', [QuizController::class, 'processAnswer'])
+    ->name('quizzes.process');
+    Route::get('/quizzes/{id}/results', [QuizController::class, 'showResults'])
+    ->name('quizzes.results');
 
 Route::get('/dashboard', function () {
   return view('dashboard');

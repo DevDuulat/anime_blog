@@ -2,7 +2,6 @@
 @section('title', 'Главная')
 @section('content')
 
-
 <!-- Hero Section Begin -->
 <section class="hero">
   <div class="container">
@@ -11,10 +10,10 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="hero__text">
-              <div class="label">Adventure</div>
+              <div class="label">Приключения</div>
               <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-              <p>After 30 days of travel across the world...</p>
-              <a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+              <p>После 30 дней путешествий по всему миру...</p>
+              <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
             </div>
           </div>
         </div>
@@ -23,10 +22,10 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="hero__text">
-              <div class="label">Adventure</div>
+              <div class="label">Приключения</div>
               <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-              <p>After 30 days of travel across the world...</p>
-              <a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+              <p>После 30 дней путешествий по всему миру...</p>
+              <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
             </div>
           </div>
         </div>
@@ -35,16 +34,16 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="hero__text">
-              <div class="label">Adventure</div>
+              <div class="label">Приключения</div>
               <h2>Fate / Stay Night: Unlimited Blade Works</h2>
-              <p>After 30 days of travel across the world...</p>
-              <a href="#"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+              <p>После 30 дней путешествий по всему миру...</p>
+              <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </section>
 <!-- Hero Section End -->
 
@@ -79,7 +78,7 @@
                   <ul>
                     <li>{{ $media->category->name }}</li>
                   </ul>
-                  <h5><a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a></h5>
+                  <h5><a href="{{ route('media.detail', $media->slug) }}">{{ $media->title }}</a></h5>
                 </div>
               </div>
             </div>
@@ -116,7 +115,7 @@
                     <li>{{ $media->category->name }}</li>
                   </ul>
                   <h5>
-                    <a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a>
+                    <a href="{{ route('media.detail', $media->slug) }}">{{ $media->title }}</a>
                   </h5>
                 </div>
               </div>
@@ -151,7 +150,7 @@
                     <li>{{ $media->category->name }}</li>
                   </ul>
                   <h5>
-                    <a href="{{ route('anime.show', $media->slug) }}">{{ $media->title }}</a>
+                    <a href="{{ route('media.detail', $media->slug) }}">{{ $media->title }}</a>
                   </h5>
                 </div>
               </div>
@@ -162,35 +161,7 @@
         <!-- Остальные секции (recent__product, live__product) можно аналогично переделать с использованием Blade -->
 
       </div>
-      <div class="col-lg-4 col-md-6 col-sm-8">
-        <div class="product__sidebar">
-          <div class="product__sidebar__view">
-            <div class="section-title">
-              <h5>Наш блог</h5>
-            </div>
-            <ul class="filter__controls">
-              <li class="active" data-filter="*">Day</li>
-              <li data-filter=".week">Week</li>
-              <li data-filter=".month">Month</li>
-              <li data-filter=".years">Years</li>
-            </ul>
-            <div class="filter__gallery">
-              @foreach($blogPosts as $post)
-              <div class="product__sidebar__view__item set-bg mix day years"
-                data-setbg="{{ asset('storage/' . $post->image) }}">
-                <div class="ep">{{ $post->category->name }}</div>
-                <div class="view">
-                  <i class="fa fa-comments"></i> {{ $post->comments->count() }}
-                </div>
-                <h5>
-                  <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
-                </h5>
-              </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
-      </div>
+      <x-blog-sidebar :posts="$blogPosts" title="Последние статьи" :showFilters="true" />
     </div>
   </div>
 </section>
