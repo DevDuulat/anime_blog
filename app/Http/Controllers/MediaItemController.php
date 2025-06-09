@@ -10,6 +10,19 @@ use Illuminate\Http\Request;
 class MediaItemController extends Controller
 {
     //
+
+    public function index(Request $request)
+{
+    $sort = $request->input('sort', 'created_at');
+
+    $mediaItems = MediaItem::orderBy($sort, 'desc')->paginate(12);
+
+    $blogPosts = Post::latest()->take(5)->get();
+
+    return view('media.index', compact('mediaItems', 'blogPosts'));
+}
+
+
     public function byCategory(Request $request, $slug)
     {
         $category = Category::with('children')->where('slug', $slug)->firstOrFail();

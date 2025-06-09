@@ -149,20 +149,31 @@ document.addEventListener("DOMContentLoaded", function () {
             const submenu = this.querySelector(".blog-submenu");
             const isOpen = submenu.style.display === "block";
 
-            // Закрыть все
             document.querySelectorAll(".blog-submenu").forEach(function (sm) {
                 sm.style.display = "none";
             });
 
-            // Открыть текущее
             submenu.style.display = isOpen ? "none" : "block";
         });
     });
 
-    // Клик вне — закрыть
     document.addEventListener("click", function () {
         document.querySelectorAll(".blog-submenu").forEach(function (sm) {
             sm.style.display = "none";
         });
+    });
+});
+
+$(document).ready(function () {
+    $("#userDropdownToggle").on("click", function (e) {
+        e.preventDefault();
+        $("#userDropdownMenu").toggle();
+    });
+
+    $(document).on("click", function (e) {
+        const $target = $(e.target);
+        if (!$target.closest(".user-dropdown").length) {
+            $("#userDropdownMenu").hide();
+        }
     });
 });

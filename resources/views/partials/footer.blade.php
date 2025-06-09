@@ -18,7 +18,6 @@
             <li class="active"><a href="./index.html">Главаня</a></li>
             <li><a href="./categories.html">Все категории</a></li>
             <li><a href="./blog.html">Наш блог</a></li>
-            <li><a href="#">Контакты</a></li>
           </ul>
         </div>
       </div>

@@ -59,7 +59,7 @@
             <!-- Запомнить меня -->
             <div class="mt-3 mb-3 d-flex align-items-center">
               <input type="checkbox" id="remember_me" name="remember" class="me-2" />
-              <label for="remember_me" class="mb-0">Запомнить меня</label>
+              <label for="remember_me" class="mb-0 text-white">Запомнить меня</label>
             </div>
 
             <button type="submit" class="site-btn">Войти</button>
