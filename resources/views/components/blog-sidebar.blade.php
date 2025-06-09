@@ -7,12 +7,13 @@
 
       @if($showFilters)
       <ul class="filter__controls">
-        <li class="active" data-filter="*">Day</li>
-        <li data-filter=".week">Week</li>
-        <li data-filter=".month">Month</li>
-        <li data-filter=".years">Years</li>
+        <li class="active" data-filter="*">День</li>
+        <li data-filter=".week">Неделя</li>
+        <li data-filter=".month">Месяц</li>
+        <li data-filter=".years">Год</li>
       </ul>
       @endif
+
 
       <div class="filter__gallery">
         @foreach($posts as $post)

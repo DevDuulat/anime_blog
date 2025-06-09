@@ -7,7 +7,9 @@ use App\Http\Controllers\MediaItemController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -23,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/media', [MediaItemController::class, 'index'])->name('media.index');
 Route::get('/media-detail/{slug}', [MediaItemController::class, 'mediaDetail'])->name('media.detail');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
@@ -45,6 +47,9 @@ Route::post('/quizzes/{quizId}/questions/{questionId}', [QuizController::class, 
     ->name('quizzes.process');
     Route::get('/quizzes/{id}/results', [QuizController::class, 'showResults'])
     ->name('quizzes.results');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
 
 Route::get('/dashboard', function () {
   return view('dashboard');

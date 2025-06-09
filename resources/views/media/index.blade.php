@@ -10,7 +10,9 @@
             <div class="row">
               <div class="col-lg-8 col-md-8 col-sm-6">
                 <div class="section-title">
-                  <h4>{{ $category->name }}</h4>
+                  <h4>
+                    {{ isset($category) ? $category->name : 'Все медиа' }}
+                  </h4>
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6">
@@ -29,6 +31,7 @@
             </div>
           </div>
 
+          @if(isset($category) && $category->children->isNotEmpty())
           <ul class="blog-filter__controls">
             @foreach($category->children as $child)
             <li class="blog-dropdown-toggle">
@@ -36,6 +39,7 @@
             </li>
             @endforeach
           </ul>
+          @endif
 
           <div class="row">
             @forelse($mediaItems as $media)
@@ -48,7 +52,7 @@
                 </div>
                 <div class="product__item__text">
                   <ul>
-                    <li>{{ $media->category->name }}</li>
+                    <li>{{ $media->category->name ?? 'Без категории' }}</li>
                   </ul>
                   <h5>
                     <a href="{{ route('media.show', $media->slug) }}">{{ $media->title }}</a>
@@ -58,7 +62,7 @@
             </div>
             @empty
             <div class="col-12 text-white">
-              <p>Нет медиафайлов в этой категории.</p>
+              <p>Нет медиафайлов{{ isset($category) ? ' в этой категории' : '' }}.</p>
             </div>
             @endforelse
           </div>
