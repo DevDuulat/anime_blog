@@ -31,6 +31,7 @@ class MediaItemSeeder extends Seeder
             'description' => 'Human inhabiting the world of Alcia is branded by a “Count” or a number written on their body...',
             'watch_url' => 'https://shikimori.one/animes/z356-fate-stay-night',
             'views' => 131541,
+            'image' => 'https://placehold.co/600x400',
         ]);
     }
 }

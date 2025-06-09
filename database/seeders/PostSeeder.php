@@ -32,6 +32,7 @@ class PostSeeder extends Seeder
         'content' => fake()->paragraph(8),
         'category_id' => $category->id,
         'user_id' => $user->id,
+        'image' => 'https://placehold.co/600x400',
       ]);
     }
   }

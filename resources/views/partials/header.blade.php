@@ -13,29 +13,43 @@
           <nav class="header__menu mobile-menu">
             <ul>
               <li class="active"><a href="{{ route('home') }}">Главная</a></li>
-              <li>
-                <a href="{{ route('home') }}">Категории <span class="arrow_carrot-down"></span></a>
+              <li class="nav-item dropdown" style="position: relative;">
+                <a href="#" class="nav-link">Категории <span class="arrow_carrot-down"></span></a>
+
                 <ul class="dropdown">
-                  <li><a href="{{ route('home') }}">Категории</a></li>
-                  <li><a href="{{ route('home') }}">Кино</a></li>
-                  <li>
-                    <a href="{{ route('home') }}">Драмма</a>
+                  @foreach($categories as $category)
+                  <li class="submenu-parent" style="position: relative;">
+                    <a href="{{ route('category.show', $category->slug) }}"
+                      class="{{ $category->children->count() ? 'submenu-toggle' : '' }}">
+                      {{ $category->name }}
+                      @if($category->children->count())
+                      <span class="arrow_carrot-right"></span>
+                      @endif
+                    </a>
+
+                    @if($category->children->count())
+                    <ul class="dropdown-sub">
+                      @foreach($category->children as $child)
+                      <li>
+                        <a href="{{ route('category.show', $child->slug) }}">{{ $child->name }}</a>
+                      </li>
+                      @endforeach
+                    </ul>
+                    @endif
                   </li>
-                  <li>
-                    <a href="{{ route('home') }}">Аниме</a>
-                  </li>
+                  @endforeach
                 </ul>
               </li>
+
+
               <li><a href="{{ route('posts.index') }}">Наш Блог</a></li>
-              <li><a href="{{ route('home') }}">Викторины</a></li>
-              <li><a href="{{ route('home') }}">Контакты</a></li>
+              <li><a href="{{ route('quiz') }}">Викторины</a></li>
             </ul>
           </nav>
         </div>
       </div>
       <div class="col-lg-2">
         <div class="header__right">
-          <a href="#" class="search-switch"><span class="icon_search"></span></a>
           <a href="{{ route('login') }}"><span class="icon_profile"></span></a>
         </div>
       </div>

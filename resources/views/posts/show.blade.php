@@ -83,7 +83,7 @@
           @auth
           <div class="blog__details__form">
             <h4>Оставить комментарий</h4>
-            <form action="{{ route('comments.store', $post->slug) }}" method="POST">
+            <form action="{{ route('posts.comments.store', $post->slug) }}" method="POST">
               @csrf
               <div class="row">
                 <div class="col-lg-6">
