@@ -23,7 +23,7 @@
       <div class="col-lg-8">
         <div class="blog__details__content">
           <div class="blog__details__text text-white">
-            {!! nl2br(e($post->content)) !!}
+            {!! $post->content !!}
           </div>
 
           <div class="blog__details__tags mt-4">
