@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="product spad">
+<section class="product spad" style="margin-bottom: 190px">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -16,7 +16,31 @@
               </div>
             </div>
           </div>
+          <style>
+            .cast-quiz {
+              width: 100%;
+              color: #f5f5f5;
+              font-size: 18px;
+              padding: 10px;
+              border-radius: 20px;
+              text-align: start;
+              border: 1px solid #e53637;
+            }
 
+            .cast-quiz:hover {
+              background: none;
+              background: #e53637;
+            }
+
+            .cast-quiz input {
+              margin-left: 1px;
+              margin-top: 8px;
+            }
+
+            .cast-quiz span {
+              margin-left: 20px;
+            }
+          </style>
           <form action="{{ route('quizzes.process', [$quiz->id, $currentQuestion->id]) }}" method="POST">
             @csrf
             <div class="row d-flex justify-content-center text-center">
