@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
-use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
+use App\Filament\Resources\CategoryResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
 {
@@ -34,19 +35,17 @@ class CategoryResource extends Resource
           ->withCount()
           ->enableBranchNode(),
 
-        Forms\Components\TextInput::make('name')
+      Forms\Components\TextInput::make('name')
           ->required()
           ->maxLength(255)
-          ->reactive()
-          ->afterStateUpdated(function ($state, callable $set) {
-            $set('slug', Str::slug($state));
+          ->live(onBlur: true)
+          ->afterStateUpdated(function (Set $set, $state) {
+              $set('slug', Str::slug($state));
           }),
-
-       Forms\Components\TextInput::make('slug')
+    Forms\Components\TextInput::make('slug')
           ->required()
-          ->maxLength(255)
-          ->readOnly(),
-      ]);
+          ->maxLength(255),
+        ]);
   }
 
 

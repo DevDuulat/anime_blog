@@ -2,16 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
-use App\Models\Post;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\Post;
 use Filament\Tables;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PostResource\Pages;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PostResource\RelationManagers;
+use Filament\Forms\Components\Grid;
 
 class PostResource extends Resource
 {
@@ -20,28 +25,62 @@ class PostResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-            ]);
-    }
+{
+    return $form
+        ->schema([
+            Grid::make()
+                ->schema([
+                    SelectTree::make('category_id')
+                        ->label('Категория')
+                        ->relationship(
+                            relationship: 'category',
+                            titleAttribute: 'name',
+                            parentAttribute: 'parent_id'
+                        )
+                        ->placeholder('Выберите категорию')
+                        ->searchable()
+                        ->defaultOpenLevel(2)
+                        ->enableBranchNode()
+                        ->clearable()
+                        ->withCount()
+                        ->required(),
+
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, $state) {
+                            $set('slug', Str::slug($state));
+                        }),
+
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255),
+
+                    Forms\Components\FileUpload::make('image')
+                        ->image(),
+                ]),
+
+            RichEditor::make('content')
+                ->columnSpan('full')
+                ->toolbarButtons([
+                    'attachFiles',
+                    'blockquote',
+                    'bold',
+                    'bulletList',
+                    'codeBlock',
+                    'h2',
+                    'h3',
+                    'italic',
+                    'link',
+                    'orderedList',
+                    'redo',
+                    'strike',
+                    'underline',
+                    'undo',
+                ]),
+        ]);
+}
 
     public static function table(Table $table): Table
     {
