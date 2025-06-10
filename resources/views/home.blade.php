@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="hero__items set-bg" data-setbg="{{ asset('img/hero/hero-1.jpg') }}">
+      <div class="hero__items set-bg" data-setbg="{{ asset('img/hero/bg-1.jpg') }}">
         <div class="row">
           <div class="col-lg-6">
             <div class="hero__text">
