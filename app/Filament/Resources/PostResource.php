@@ -10,13 +10,14 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PostResource\Pages;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PostResource\RelationManagers;
-use Filament\Forms\Components\Grid;
 
 class PostResource extends Resource
 {
@@ -30,6 +31,9 @@ class PostResource extends Resource
         ->schema([
             Grid::make()
                 ->schema([
+                  Forms\Components\Hidden::make('user_id')
+                    ->default(Auth::id())
+                    ->required(),
                     SelectTree::make('category_id')
                         ->label('Категория')
                         ->relationship(
