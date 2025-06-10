@@ -11,7 +11,7 @@
           <div class="col-lg-6">
             <div class="hero__text">
               <div class="label">Приключения</div>
-              <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+              <h2>Судьба / Ночь схватки: Неограниченные работы клинков</h2>
               <p>После 30 дней путешествий по всему миру...</p>
               <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
             </div>
@@ -23,7 +23,7 @@
           <div class="col-lg-6">
             <div class="hero__text">
               <div class="label">Приключения</div>
-              <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+              <h2>Судьба / Ночь схватки: Неограниченные работы клинков</h2>
               <p>После 30 дней путешествий по всему миру...</p>
               <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
             </div>
@@ -35,7 +35,7 @@
           <div class="col-lg-6">
             <div class="hero__text">
               <div class="label">Приключения</div>
-              <h2>Fate / Stay Night: Unlimited Blade Works</h2>
+              <h2>Судьба / Ночь схватки: Неограниченные работы клинков</h2>
               <p>После 30 дней путешествий по всему миру...</p>
               <a href="#"><span>Смотреть сейчас</span> <i class="fa fa-angle-right"></i></a>
 
