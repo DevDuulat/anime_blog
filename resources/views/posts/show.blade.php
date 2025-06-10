@@ -73,7 +73,7 @@
               <div class="blog__details__comment__item__text">
                 <span>{{ $comment->created_at->format('F d, Y') }}</span>
                 <h5>{{ $comment->user->name ?? 'Аноним' }}</h5>
-                <p>{{ $comment->body }}</p>
+                <p>{{ $comment->content }}</p>
               </div>
             </div>
             @endforeach

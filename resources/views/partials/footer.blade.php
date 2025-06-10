@@ -15,9 +15,9 @@
       <div class="col-lg-6">
         <div class="footer__nav">
           <ul>
-            <li class="active"><a href="./index.html">Главаня</a></li>
-            <li><a href="./categories.html">Все категории</a></li>
-            <li><a href="./blog.html">Наш блог</a></li>
+            <li class="active"><a href="{{ route('home') }}">Главаня</a></li>
+            <li><a href="{{ route('posts.index') }}">Наш блог</a></li>
+            <li><a href="{{ route('quiz') }}">Викторины</a></li>
           </ul>
         </div>
       </div>
