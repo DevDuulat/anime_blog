@@ -42,10 +42,10 @@ class CategoryResource extends Resource
             $set('slug', Str::slug($state));
           }),
 
-        Forms\Components\TextInput::make('slug')
+       Forms\Components\TextInput::make('slug')
           ->required()
           ->maxLength(255)
-          ->disabled(), // или ->readOnly()
+          ->readOnly(),
       ]);
   }
 
