@@ -8,6 +8,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\QuizResource\Pages;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 
@@ -35,6 +36,9 @@ class QuizResource extends Resource
               ->clearable()
               ->withCount()
               ->required(),
+               Forms\Components\Hidden::make('user_id')
+                    ->default(Auth::id())
+                    ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),

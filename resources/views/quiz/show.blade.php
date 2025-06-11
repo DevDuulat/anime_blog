@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="product spad" style="margin-bottom: 190px">
+<section class="product spad" style="margin-bottom: 230px 0">
   <div class="container">
     <div class="row">
       <div class="col-12">

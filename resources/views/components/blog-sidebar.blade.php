@@ -24,7 +24,7 @@
           <i class="fa fa-comments"></i> {{ $post->comments_count }}
         </div>
         <h5>
-          <a href="{{ $post->link }}">{{ $post->title }}</a>
+          <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
         </h5>
       </div>
       @endforeach

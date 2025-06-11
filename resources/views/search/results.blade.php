@@ -10,7 +10,7 @@
           <div class="product__page__title">
             <div class="row mb-3">
               <div class="col-12">
-                <h4>Результаты поиска по запросу: "{{ $query }}"</h4>
+                <h4 class="text-white">Результаты поиска по запросу: "{{ $query }}"</h4>
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
 
             @if($mediaItems->isEmpty() && $posts->isEmpty())
             <div class="col-12">
-              <p>По вашему запросу ничего не найдено.</p>
+              <p class="text-white">По вашему запросу ничего не найдено.</p>
             </div>
             @endif
           </div>
@@ -61,24 +61,7 @@
       </div>
 
       <!-- Sidebar -->
-      <div class="col-lg-4 col-md-6 col-sm-8">
-        <div class="product__sidebar">
-          <div class="product__sidebar__view">
-            <div class="section-title">
-              <h5>Последние посты</h5>
-            </div>
-            <div class="filter__gallery">
-              @foreach($blogPosts ?? [] as $post)
-              <div class="product__sidebar__view__item set-bg" data-setbg="{{ asset('storage/' . $post->image) }}">
-                <div class="ep">{{ optional($post->category)->name }}</div>
-                <div class="view"><i class="fa fa-eye"></i> {{ $post->views ?? 0 }}</div>
-                <h5><a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a></h5>
-              </div>
-              @endforeach
-            </div>
-          </div>
-        </div>
-      </div>
+      <x-blog-sidebar :posts="$posts" title="Последние статьи" :showFilters="true" />
       <!-- End Sidebar -->
     </div>
   </div>

@@ -15,12 +15,13 @@ class QuizController extends Controller
           $quizzes = Quiz::with('category:id,name')
               ->select('id', 'title', 'image', 'category_id')
               ->get();
-          $blogPosts = Post::with(['category', 'user'])
-          ->latest()
-          ->take(5)
-          ->get();
+          $posts = Post::with(['category', 'user'])
+            ->withCount('comments')
+            ->latest()
+            ->take(5)
+            ->get();
 
-          return view('quiz.index', compact('quizzes',    'blogPosts'));
+          return view('quiz.index', compact('quizzes',    'posts'));
       }
 
       public function show($id)
