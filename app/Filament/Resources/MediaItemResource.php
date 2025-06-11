@@ -2,21 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\MediaGenre;
-use App\Enums\MediaType;
-use App\Filament\Resources\MediaItemResource\Pages;
-use App\Filament\Resources\MediaItemResource\RelationManagers;
-use App\Models\MediaItem;
-use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use App\Enums\MediaType;
+use Filament\Forms\Form;
+use App\Enums\MediaGenre;
+use App\Models\MediaItem;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\CheckboxList;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
+use App\Filament\Resources\MediaItemResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\MediaItemResource\RelationManagers;
 
 class MediaItemResource extends Resource
 {
@@ -28,13 +30,17 @@ class MediaItemResource extends Resource
     {
         return $form
       ->schema([
-
         Forms\Components\TextInput::make('title')
           ->required()
-          ->maxLength(255),
-        Forms\Components\TextInput::make('slug')
+          ->maxLength(255)
+          ->live(onBlur: true)
+          ->afterStateUpdated(function (Set $set, $state) {
+              $set('slug', Str::slug($state));
+          }),
+    Forms\Components\TextInput::make('slug')
           ->required()
           ->maxLength(255),
+
         SelectTree::make('category_id')
           ->label('Категория')
           ->relationship(
@@ -73,8 +79,6 @@ class MediaItemResource extends Resource
 
         Forms\Components\Textarea::make('description')
           ->columnSpanFull(),
-        Forms\Components\TextInput::make('watch_url')
-          ->maxLength(255),
         Forms\Components\TextInput::make('views')
           ->required()
           ->numeric()
@@ -101,8 +105,6 @@ class MediaItemResource extends Resource
             ->date()
             ->sortable(),
           Tables\Columns\TextColumn::make('type')
-            ->searchable(),
-          Tables\Columns\TextColumn::make('watch_url')
             ->searchable(),
           Tables\Columns\TextColumn::make('views')
             ->numeric()

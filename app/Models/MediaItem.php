@@ -22,7 +22,6 @@ class MediaItem extends Model
       'type',
       'genres',
       'description',
-      'watch_url',
       'views',
       'image',
     ];
