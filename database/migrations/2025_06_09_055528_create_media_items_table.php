@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->json('genres')->nullable();
             $table->text('description')->nullable();
-            $table->string('watch_url')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
