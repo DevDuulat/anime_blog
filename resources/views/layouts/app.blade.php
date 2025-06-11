@@ -6,7 +6,6 @@
   <title>@yield('title', 'Default Title')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {{-- Стили --}}
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -25,19 +24,16 @@
 </head>
 
 <body>
-  <!-- Page Preloder -->
   <div id="preloder">
     <div class="loader"></div>
   </div>
 
   @include('partials.header')
-  {{-- Контент страницы --}}
+
   @yield('content')
 
-  {{-- Футер --}}
   @include('partials.footer')
 
-  <!-- Js Plugins -->
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/player.js') }}"></script>
