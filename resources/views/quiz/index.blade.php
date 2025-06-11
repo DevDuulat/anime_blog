@@ -47,7 +47,7 @@
         </div>
 
       </div>
-      <x-blog-sidebar :posts="$blogPosts" title="Последние статьи" :showFilters="true" />
+      <x-blog-sidebar :posts="$posts" title="Последние статьи" :showFilters="true" />
     </div>
   </div>
 </section>

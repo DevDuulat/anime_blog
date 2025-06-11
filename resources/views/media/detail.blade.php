@@ -103,27 +103,7 @@
         @endauth
       </div>
 
-      <div class="col-lg-4 col-md-4">
-        <div class="anime__details__sidebar">
-          <div class="section-title">
-            <h5>Наш Блог</h5>
-          </div>
-          <div class="filter__gallery">
-            @foreach($blogPosts as $post)
-            <div class="product__sidebar__view__item set-bg mix day years"
-              data-setbg="{{ asset('storage/' . $post->image) }}">
-              <div class="ep">{{ $post->category->name }}</div>
-              <div class="view">
-                <i class="fa fa-comments"></i> {{ $post->comments->count() }}
-              </div>
-              <h5>
-                <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
-              </h5>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
+      <x-blog-sidebar :posts="$posts" title="Последние статьи" :showFilters="true" />
     </div>
   </div>
 </section>

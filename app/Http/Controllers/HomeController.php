@@ -27,16 +27,19 @@ class HomeController extends Controller
           ->take(2)
           ->get();
 
-      $blogPosts = Post::with(['category', 'user'])
+      $posts = Post::with(['category', 'user'])
+          ->withCount('comments')
           ->latest()
           ->take(5)
           ->get();
+
+
 
       return view('home', compact(
           'trendingMedia',
           'popularMedia',
           'recentMedia',
-          'blogPosts'
+          'posts'
       ));
   }
 

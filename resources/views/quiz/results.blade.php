@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-12">
               <div class="section-title">
-                <h4>Результаты викторины: {{ $quiz->title }}</h4>
+                <h4 class="text-white">Результаты викторины: {{ $quiz->title }}</h4>
               </div>
             </div>
           </div>

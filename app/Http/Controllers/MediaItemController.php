@@ -12,15 +12,19 @@ class MediaItemController extends Controller
     //
 
     public function index(Request $request)
-{
-    $sort = $request->input('sort', 'created_at');
+    {
+        $sort = $request->input('sort', 'created_at');
 
-    $mediaItems = MediaItem::orderBy($sort, 'desc')->paginate(12);
+        $mediaItems = MediaItem::orderBy($sort, 'desc')->paginate(12);
 
-    $blogPosts = Post::latest()->take(5)->get();
+        $posts = Post::with(['category', 'user'])
+            ->withCount('comments')
+            ->latest()
+            ->take(5)
+            ->get();
 
-    return view('media.index', compact('mediaItems', 'blogPosts'));
-}
+        return view('media.index', compact('mediaItems', 'posts'));
+    }
 
 
     public function byCategory(Request $request, $slug)
@@ -37,9 +41,13 @@ class MediaItemController extends Controller
             ->orderBy($sort, 'desc')
             ->paginate(12);
 
-        $blogPosts = Post::latest()->take(5)->get();
+        $posts = Post::with(['category', 'user'])
+        ->withCount('comments')
+          ->latest()
+          ->take(5)
+          ->get();
 
-        return view('media.index', compact('mediaItems', 'category', 'blogPosts'));
+        return view('media.index', compact('mediaItems', 'category', 'posts'));
     }
 
     public function show($slug, Request $request)
@@ -61,11 +69,12 @@ class MediaItemController extends Controller
           $currentEpisode = $episodeNumber
               ? $mediaItem->episodes->where('episode_number', $episodeNumber)->first()
               : $mediaItem->episodes->sortBy('episode_number')->first();
-          $blogPosts = Post::with(['category', 'user'])
-                ->latest()
-                ->take(5)
-                ->get();
+          $posts = Post::with(['category', 'user'])
+            ->withCount('comments')
+            ->latest()
+            ->take(5)
+            ->get();
 
-          return view('media.detail', compact('mediaItem', 'currentEpisode', 'blogPosts'));
+          return view('media.detail', compact('mediaItem', 'currentEpisode', 'posts'));
       }
 }

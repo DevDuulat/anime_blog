@@ -22,7 +22,8 @@ class SearchController extends Controller
             ->orWhere('content', 'like', "%{$query}%")
             ->get();
 
-        $blogPosts = Post::with(['category', 'user'])
+        $posts = Post::with(['category', 'user'])
+        ->withCount('comments')
           ->latest()
           ->take(5)
           ->get();
@@ -31,7 +32,6 @@ class SearchController extends Controller
             'query' => $query,
             'mediaItems' => $mediaItems,
             'posts' => $posts,
-            'blogPosts' => Post::latest()->take(5)->get(),
         ]);
     }
 }
