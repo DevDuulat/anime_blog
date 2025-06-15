@@ -78,7 +78,6 @@
       </div>
     </div>
 
-    <!-- Пагинация -->
     <div class="row mt-4">
       <div class="col-lg-12">
         {{ $posts->links() }}
@@ -86,5 +85,4 @@
     </div>
   </div>
 </section>
-<!-- Blog Section End -->
 @endsection
