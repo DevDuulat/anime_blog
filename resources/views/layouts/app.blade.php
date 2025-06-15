@@ -27,9 +27,7 @@
   </div>
 
   @include('partials.header')
-
   @yield('content')
-
   @include('partials.footer')
 
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
