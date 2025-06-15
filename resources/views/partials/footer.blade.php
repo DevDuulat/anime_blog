@@ -1,4 +1,3 @@
-<!-- Footer Section Begin -->
 <footer class="footer">
   <div class="page-up">
     <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
@@ -32,4 +31,3 @@
     </div>
   </div>
 </footer>
-<!-- Footer Section End -->
