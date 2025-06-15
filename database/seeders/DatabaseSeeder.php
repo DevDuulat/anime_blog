@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
       QuestionSeeder::class,
       AnswerSeeder::class,
       MediaItemSeeder::class,
-
     ]);
   }
 }
