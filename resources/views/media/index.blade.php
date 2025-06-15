@@ -73,9 +73,7 @@
         </div>
       </div>
 
-      {{-- Sidebar --}}
       <x-blog-sidebar :posts="$posts" title="Последние статьи" :showFilters="true" />
-      {{-- End Sidebar --}}
     </div>
   </div>
 </section>
