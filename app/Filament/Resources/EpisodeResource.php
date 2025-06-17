@@ -42,14 +42,19 @@ class EpisodeResource extends Resource
                   TextInput::make('slug')
                       ->required()
                       ->maxLength(255),
+TextInput::make('video_url')
+    ->label('Ссылка на видео')
+    ->url()
+    ->required(),
 
-                  FileUpload::make('video_url')
-                      ->label('Видео')
-                      ->directory('episodes')
-                      ->disk('public')
-                      ->acceptedFileTypes(['video/mp4'])
-                      ->maxSize(2048 * 1024)
-                      ->required(),
+                  // FileUpload::make('video_url')
+                  //     ->label('Видео')
+                  //     ->directory('episodes')
+                  //     ->disk('public')
+                  //     ->acceptedFileTypes(['video/mp4'])
+                  //     ->maxSize(2097152)
+                  //     ->preserveFilenames()
+                  //     ->required(),
 
                   TextInput::make('episode_number')
                       ->required()
