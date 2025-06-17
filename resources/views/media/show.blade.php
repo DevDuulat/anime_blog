@@ -10,13 +10,41 @@
 
         {{-- Видеоплеер --}}
         <div class="anime__video__player">
-          <video id="player" playsinline controls data-poster="{{ asset('storage/' . $mediaItem->image) }}">
-            @if($currentEpisode && $currentEpisode->video_url)
-            <source src="{{ asset('storage/' . $currentEpisode->video_url) }}" type="video/mp4" />
-            @else
-            <source src="#" type="video/mp4" />
-            @endif
-          </video>
+          @if($currentEpisode && $currentEpisode->video_url)
+          @php
+          $url = $currentEpisode->video_url;
+          $isYoutube = Str::contains($url, ['youtube.com', 'youtu.be']);
+          if ($isYoutube) {
+          // Преобразуем ссылку YouTube в embed-формат
+          if (Str::contains($url, 'watch?v=')) {
+          parse_str(parse_url($url, PHP_URL_QUERY), $query);
+          $youtubeId = $query['v'] ?? null;
+          } elseif (Str::contains($url, 'youtu.be/')) {
+          $youtubeId = basename(parse_url($url, PHP_URL_PATH));
+          }
+          $embedUrl = $youtubeId ? "https://www.youtube.com/embed/$youtubeId" : null;
+          }
+          @endphp
+
+          @if($isYoutube && isset($embedUrl))
+          <div class="anime__video__player">
+            <iframe width="100%" height="500" src="{{ $embedUrl }}" title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          @else
+          <div class="anime__video__player">
+            <video id="player" playsinline controls data-poster="{{ asset('storage/' . $mediaItem->image) }}">
+              <source src="{{ asset('storage/' . $currentEpisode->video_url) }}" type="video/mp4" />
+            </video>
+          </div>
+          @endif
+          @else
+          <div class="anime__video__player">
+            <p>Видео недоступно</p>
+          </div>
+          @endif
+
         </div>
 
         {{-- Список эпизодов --}}
