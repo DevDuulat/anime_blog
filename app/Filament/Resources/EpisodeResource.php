@@ -20,69 +20,82 @@ use Illuminate\Support\Str;
 class EpisodeResource extends Resource
 {
     protected static ?string $model = Episode::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Эпизоды';
+    protected static ?string $modelLabel = 'Эпизоды';
+    protected static ?string $pluralModelLabel = 'Эпизоды';
 
     public static function form(Form $form): Form
-      {
-          return $form
-              ->schema([
-                  Select::make('media_item_id')
-                      ->relationship('mediaItem', 'title')
-                      ->required(),
+    {
+        return $form
+            ->schema([
+                Select::make('media_item_id')
+                    ->label('Медиа элемент')
+                    ->relationship('mediaItem', 'title')
+                    ->required(),
 
-                  TextInput::make('title')
-                      ->required()
-                      ->maxLength(255)
-                      ->live(onBlur: true) // При потере фокуса
-                      ->afterStateUpdated(function ($state, callable $set) {
-                          $set('slug', Str::slug($state));
-                      }),
+                TextInput::make('title')
+                    ->label('Название')
+                    ->required()
+                    ->maxLength(255)
+                    ->live(onBlur: true) // При потере фокуса
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('slug', Str::slug($state));
+                    }),
 
-                  TextInput::make('slug')
-                      ->required()
-                      ->maxLength(255),
-TextInput::make('video_url')
-    ->label('Ссылка на видео')
-    ->url()
-    ->required(),
+                TextInput::make('slug')
+                    ->label('Слаг')
+                    ->required()
+                    ->maxLength(255),
 
-                  // FileUpload::make('video_url')
-                  //     ->label('Видео')
-                  //     ->directory('episodes')
-                  //     ->disk('public')
-                  //     ->acceptedFileTypes(['video/mp4'])
-                  //     ->maxSize(2097152)
-                  //     ->preserveFilenames()
-                  //     ->required(),
+                TextInput::make('video_url')
+                    ->label('Ссылка на видео')
+                    ->url()
+                    ->required(),
 
-                  TextInput::make('episode_number')
-                      ->required()
-                      ->numeric(),
-              ]);
-      }
+                // FileUpload::make('video_url')
+                //     ->label('Видео')
+                //     ->directory('episodes')
+                //     ->disk('public')
+                //     ->acceptedFileTypes(['video/mp4'])
+                //     ->maxSize(2097152)
+                //     ->preserveFilenames()
+                //     ->required(),
+
+                TextInput::make('episode_number')
+                    ->label('Номер эпизода')
+                    ->required()
+                    ->numeric(),
+            ]);
+    }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('mediaItem.title')
-                    ->numeric()
+                    ->label('Медиа элемент')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Название')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
+                    ->label('Слаг')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('video_url')
+                    ->label('Ссылка на видео')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('episode_number')
+                    ->label('Номер эпизода')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Создано')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Обновлено')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -91,14 +104,15 @@ TextInput::make('video_url')
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Редактировать'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->label('Удалить выбранные'),
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {
@@ -114,5 +128,15 @@ TextInput::make('video_url')
             'create' => Pages\CreateEpisode::route('/create'),
             'edit' => Pages\EditEpisode::route('/{record}/edit'),
         ];
+    }
+
+    public static function getBreadcrumb(): string
+    {
+      return 'Эпизоды';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Эпизоды';
     }
 }
