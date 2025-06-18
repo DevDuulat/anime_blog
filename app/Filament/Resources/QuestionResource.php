@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\QuestionResource\Pages;
-use App\Filament\Resources\QuestionResource\RelationManagers;
-use App\Models\Question;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Question;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\QuestionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\QuestionResource\RelationManagers;
 
 class QuestionResource extends Resource
 {
@@ -23,9 +24,12 @@ class QuestionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('quiz_id')
+                Select::make('quiz_id')
+                    ->label('Выберите тест')
                     ->required()
-                    ->numeric(),
+                    ->relationship('quiz', 'title')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\Textarea::make('question_text')
                     ->required()
                     ->columnSpanFull(),
