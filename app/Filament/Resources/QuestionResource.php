@@ -35,6 +35,26 @@ class QuestionResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image(),
+
+                // Add answers section
+                Forms\Components\Repeater::make('answers')
+                    ->relationship()
+                    ->schema([
+                        Forms\Components\TextInput::make('answer_text')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Текст ответа'),
+                        Forms\Components\Toggle::make('is_correct')
+                            ->required()
+                            ->label('Правильный ответ'),
+                    ])
+                    ->defaultItems(3) // Default 3 answer fields
+                    ->minItems(3) // Minimum 3 answers required
+                    ->maxItems(3) // Maximum 3 answers allowed
+                    ->columnSpanFull()
+                    ->label('Ответы')
+                    ->addActionLabel('Добавить ответ')
+                    ->orderable(false), // Disable reordering if you want exactly 3 answers
             ]);
     }
 
@@ -42,10 +62,17 @@ class QuestionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('quiz_id')
+                Tables\Columns\TextColumn::make('quiz.title')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Тест'),
+                Tables\Columns\TextColumn::make('question_text')
+                    ->limit(50)
+                    ->label('Вопрос'),
                 Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('answers_count')
+                    ->counts('answers')
+                    ->label('Кол-во ответов'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -71,7 +98,8 @@ class QuestionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // You can remove this relation manager if you're handling answers in the main form
+            // RelationManagers\AnswersRelationManager::class,
         ];
     }
 
