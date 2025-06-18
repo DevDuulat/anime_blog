@@ -23,9 +23,12 @@ class AnswerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('question_id')
+                 Forms\Components\Select::make('question_id')
+                    ->label('Вопрос')
+                    ->relationship('question', 'question_text')
+                    ->searchable()
                     ->required()
-                    ->numeric(),
+                    ->preload(),
                 Forms\Components\TextInput::make('answer_text')
                     ->required()
                     ->maxLength(255),
