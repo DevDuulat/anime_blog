@@ -20,80 +20,98 @@ class QuestionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Select::make('quiz_id')
-                    ->label('Выберите тест')
-                    ->required()
-                    ->relationship('quiz', 'title')
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\Textarea::make('question_text')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
+    protected static ?string $navigationLabel = 'Вопросы';
+    protected static ?string $modelLabel = 'Вопросы';
+    protected static ?string $pluralModelLabel = 'Вопросы';
 
-                // Add answers section
-                Forms\Components\Repeater::make('answers')
-                    ->relationship()
-                    ->schema([
-                        Forms\Components\TextInput::make('answer_text')
-                            ->required()
-                            ->maxLength(255)
-                            ->label('Текст ответа'),
-                        Forms\Components\Toggle::make('is_correct')
-                            ->required()
-                            ->label('Правильный ответ'),
-                    ])
-                    ->defaultItems(3) // Default 3 answer fields
-                    ->minItems(3) // Minimum 3 answers required
-                    ->maxItems(3) // Maximum 3 answers allowed
-                    ->columnSpanFull()
-                    ->label('Ответы')
-                    ->addActionLabel('Добавить ответ')
-                    ->orderable(false), // Disable reordering if you want exactly 3 answers
-            ]);
-    }
+   public static function form(Form $form): Form
+  {
+      return $form
+          ->schema([
+              Select::make('quiz_id')
+                  ->label('Выберите тест')
+                  ->required()
+                  ->relationship('quiz', 'title')
+                  ->searchable()
+                  ->preload(),
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('quiz.title')
-                    ->numeric()
-                    ->sortable()
-                    ->label('Тест'),
-                Tables\Columns\TextColumn::make('question_text')
-                    ->limit(50)
-                    ->label('Вопрос'),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('answers_count')
-                    ->counts('answers')
-                    ->label('Кол-во ответов'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+              Forms\Components\Textarea::make('question_text')
+                  ->label('Вопрос')
+                  ->required()
+                  ->columnSpanFull(),
+
+              Forms\Components\FileUpload::make('image')
+                  ->label('Изображение')
+                  ->image(),
+
+              // Секция с ответами
+              Forms\Components\Repeater::make('answers')
+                  ->relationship()
+                  ->schema([
+                      Forms\Components\TextInput::make('answer_text')
+                          ->label('Текст ответа')
+                          ->required()
+                          ->maxLength(255),
+
+                      Forms\Components\Toggle::make('is_correct')
+                          ->label('Правильный ответ')
+                          ->required(),
+                  ])
+                  ->defaultItems(5) // По умолчанию 3 поля для ответов
+                  ->minItems(5)     // Минимум 3 ответа
+                  ->maxItems(5)     // Максимум 3 ответа
+                  ->columnSpanFull()
+                  ->label('Ответы')
+                  ->addActionLabel('Добавить ответ')
+                  ->orderable(false), // Отключаем сортировку, чтобы всегда было ровно 3 ответа
+          ]);
+  }
+
+  public static function table(Table $table): Table
+  {
+      return $table
+          ->columns([
+              Tables\Columns\TextColumn::make('quiz.title')
+                  ->label('Тест')
+                  ->sortable()
+                  ->numeric(),
+
+              Tables\Columns\TextColumn::make('question_text')
+                  ->label('Вопрос')
+                  ->limit(50),
+
+              Tables\Columns\ImageColumn::make('image')
+                  ->label('Изображение'),
+
+              Tables\Columns\TextColumn::make('answers_count')
+                  ->label('Кол-во ответов')
+                  ->counts('answers'),
+
+              Tables\Columns\TextColumn::make('created_at')
+                  ->label('Создано')
+                  ->dateTime()
+                  ->sortable()
+                  ->toggleable(isToggledHiddenByDefault: true),
+
+              Tables\Columns\TextColumn::make('updated_at')
+                  ->label('Обновлено')
+                  ->dateTime()
+                  ->sortable()
+                  ->toggleable(isToggledHiddenByDefault: true),
+          ])
+          ->filters([
+              //
+          ])
+          ->actions([
+              Tables\Actions\EditAction::make()->label('Редактировать'),
+          ])
+          ->bulkActions([
+              Tables\Actions\BulkActionGroup::make([
+                  Tables\Actions\DeleteBulkAction::make()->label('Удалить выбранные'),
+              ]),
+          ]);
+  }
+
 
     public static function getRelations(): array
     {
@@ -110,5 +128,15 @@ class QuestionResource extends Resource
             'create' => Pages\CreateQuestion::route('/create'),
             'edit' => Pages\EditQuestion::route('/{record}/edit'),
         ];
+    }
+
+    public static function getBreadcrumb(): string
+    {
+      return 'Вопросы';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Вопросы';
     }
 }

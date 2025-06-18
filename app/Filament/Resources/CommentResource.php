@@ -17,76 +17,86 @@ use App\Filament\Resources\CommentResource\RelationManagers;
 class CommentResource extends Resource
 {
     protected static ?string $model = Comment::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Комменты';
+    protected static ?string $modelLabel = 'Комменты';
+    protected static ?string $pluralModelLabel = 'Комменты';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('user_id')
+                    ->label('Пользователь (ID)')
                     ->required()
                     ->numeric(),
+
                 Forms\Components\Textarea::make('content')
+                    ->label('Комментарий')
                     ->required()
                     ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('commentable_type')
+                    ->label('Тип связанного объекта')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('commentable_id')
+                    ->label('ID связанного объекта')
                     ->required()
                     ->numeric(),
             ]);
     }
 
     public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            Tables\Columns\TextColumn::make('user.name')
-                ->label('Пользователь')
-                ->sortable()
-                ->searchable(),
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Пользователь')
+                    ->sortable()
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('content')
-                ->label('Комментарий')
-                ->limit(50)
-                ->sortable()
-                ->searchable(),
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Комментарий')
+                    ->limit(50)
+                    ->sortable()
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('commentable_type')
-                ->label('Тип связанного объекта')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('commentable_type')
+                    ->label('Тип связанного объекта')
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('commentable_id')
-                ->label('ID связанного объекта')
-                ->numeric()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('commentable_id')
+                    ->label('ID связанного объекта')
+                    ->numeric()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('created_at')
-                ->label('Создан')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Создан')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-            Tables\Columns\TextColumn::make('updated_at')
-                ->label('Обновлен')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-        ])
-        ->filters([
-            //
-        ])
-        ->actions([
-            Tables\Actions\EditAction::make(),
-        ])
-        ->bulkActions([
-            Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]),
-        ]);
-}
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Обновлен')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make()->label('Редактировать'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make()->label('Удалить выбранные'),
+                ]),
+            ]);
+    }
+
 
 
     public static function getRelations(): array
@@ -114,6 +124,16 @@ class CommentResource extends Resource
     public static function canEdit(Model $record): bool
     {
         return false;
+    }
+
+    public static function getBreadcrumb(): string
+    {
+      return 'Комментарии';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Комментарии';
     }
 
 }
